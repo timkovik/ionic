@@ -2689,7 +2689,7 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
+    * @deprecated Use `buttons` instead. Text to display in the close button.
     */
     'closeButtonText'?: string;
     /**
@@ -2752,7 +2752,7 @@ export namespace Components {
     */
     'present': () => Promise<void>;
     /**
-    * If `true`, the close button will be displayed.
+    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
     */
     'showCloseButton': boolean;
     /**
@@ -5984,7 +5984,7 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
+    * @deprecated Use `buttons` instead. Text to display in the close button.
     */
     'closeButtonText'?: string;
     /**
@@ -6044,7 +6044,7 @@ declare namespace LocalJSX {
     */
     'position'?: 'top' | 'bottom' | 'middle';
     /**
-    * If `true`, the close button will be displayed.
+    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
     */
     'showCloseButton'?: boolean;
     /**
