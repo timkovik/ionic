@@ -695,7 +695,7 @@ proxyMethods(IonSearchbar, ['setFocus', 'getInputElement']);
 proxyInputs(IonSearchbar, ['animated', 'autocomplete', 'autocorrect', 'cancelButtonIcon', 'cancelButtonText', 'clearIcon', 'color', 'debounce', 'disabled', 'mode', 'placeholder', 'searchIcon', 'showCancelButton', 'spellcheck', 'type', 'value']);
 
 export declare interface IonSegment extends Components.IonSegment {}
-@Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['color', 'disabled', 'mode', 'scrollable', 'value'] })
+@Component({ selector: 'ion-segment', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['animated', 'color', 'disabled', 'mode', 'scrollable', 'value'] })
 export class IonSegment {
   ionChange!: EventEmitter<CustomEvent>;
   ionStyle!: EventEmitter<CustomEvent>;
@@ -706,7 +706,7 @@ export class IonSegment {
     proxyOutputs(this, this.el, ['ionChange', 'ionStyle']);
   }
 }
-proxyInputs(IonSegment, ['color', 'disabled', 'mode', 'scrollable', 'value']);
+proxyInputs(IonSegment, ['animated', 'color', 'disabled', 'mode', 'scrollable', 'value']);
 
 export declare interface IonSegmentButton extends Components.IonSegmentButton {}
 @Component({ selector: 'ion-segment-button', changeDetection: ChangeDetectionStrategy.OnPush, template: '<ng-content></ng-content>', inputs: ['checked', 'disabled', 'layout', 'mode', 'type', 'value'] })
