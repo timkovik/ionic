@@ -21,8 +21,6 @@ export class Segment implements ComponentInterface {
   private indicatorEl!: HTMLDivElement | undefined;
 
   private animated = false;
-  // private lastDrag = 0;
-  private lastIndex!: number;
 
   @Element() el!: HTMLIonSegmentElement;
 
@@ -111,9 +109,6 @@ export class Segment implements ComponentInterface {
 
   onStart(detail: GestureDetail) {
     this.activate(detail);
-
-    // touch-action does not work in iOS
-    // this.setFocus();
   }
 
   onMove(detail: GestureDetail) {
@@ -131,11 +126,11 @@ export class Segment implements ComponentInterface {
     const left = rect.left;
     const width = rect.width;
 
+    // TODO check for disabled and skip over those
+
     // If the indicator is currently activated then we have started the gesture
     // on top of the checked button so we need to slide the indicator
     // by checking the button next to it as we move
-
-    // TODO check for disabled and skip over those
     if (activated) {
       if (currentX < left) {
         const nextIndex = index - 1;
@@ -150,26 +145,48 @@ export class Segment implements ComponentInterface {
           buttons[nextIndex].checked = true;
         }
       }
-    } else {
-      this.lastIndex = index;
-
-      console.log('last index is', this.lastIndex);
-      // if the indicator is not activated we need to follow the index the user
-      // moves around by to figure out where they left off
-      // TODO
     }
   }
 
   onEnd(detail: GestureDetail) {
+    const buttons = this.getButtons();
+    const index = buttons.findIndex(button => button.checked === true);
+
+    const activated = this.activated;
+    const startEl = buttons[index];
+
+    const currentX = detail.currentX;
+
+    // Get the element that the touch event started on in case
+    // it was the checked button, then we will move the indicator
+    const rect = startEl.getBoundingClientRect();
+    const left = rect.left;
+    const width = rect.width;
+
+    // TODO width is off for the very left and very right of buttons
+
     // If the indicator is not activated then we will just set the indicator
     // where the gesture ended
-    if (!this.activated) {
-      console.log('not activated set the current button to checked if it is not disabled');
+    if (!activated) {
+      if (currentX < left) {
+        const diff = Math.ceil((left - currentX) / width);
+        const nextIndex = index - diff;
+
+        if (nextIndex >= 0) {
+          buttons[nextIndex].checked = true;
+        }
+      } else if (currentX > (left + width)) {
+        const diff = Math.floor((currentX - left) / width);
+        const nextIndex = index + diff;
+
+        if (nextIndex < buttons.length) {
+          buttons[nextIndex].checked = true;
+        }
+      }
     }
 
     this.activated = false;
 
-    // this.lastDrag = Date.now();
     detail.event.preventDefault();
     detail.event.stopImmediatePropagation();
   }
