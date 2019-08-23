@@ -455,6 +455,13 @@ export const SegmentExample: React.FunctionComponent = () => (
 | `ionStyle`  | Emitted when the styles change.              | `CustomEvent<StyleEventDetail>`         |
 
 
+## CSS Custom Properties
+
+| Name           | Description                      |
+| -------------- | -------------------------------- |
+| `--background` | Background of the segment button |
+
+
 ----------------------------------------------
 
 *Built with [StencilJS](https://stenciljs.com/)*
