@@ -14,7 +14,7 @@ import { createColorClasses } from '../../utils/theme';
     ios: 'segment.ios.scss',
     md: 'segment.md.scss'
   },
-  scoped: true
+  shadow: true
 })
 export class Segment implements ComponentInterface {
   private animated = false;
@@ -160,6 +160,15 @@ export class Segment implements ComponentInterface {
       return;
     }
 
+    // TODO clean up
+    const next = index + 1;
+    for (const button of buttons) {
+      button.classList.remove('segment-button-after-checked');
+    }
+    if (next < buttons.length) {
+      buttons[next].classList.add('segment-button-after-checked');
+    }
+
     // Transform the indicator based on the index of the button
     const left = `${(index * 100)}%`;
     const width = `calc(${1 / buttons.length * 100}%)`;
@@ -278,6 +287,7 @@ export class Segment implements ComponentInterface {
           'segment-scrollable': this.scrollable
         }}
       >
+        <slot></slot>
         <div
           part="indicator"
           class={{
