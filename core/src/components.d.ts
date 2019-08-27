@@ -25,12 +25,14 @@ import {
   HeaderFn,
   HeaderHeightFn,
   InputChangeEventDetail,
+  IonicAnimation,
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
   MenuControllerI,
+  MenuI,
   ModalOptions,
   NavComponent,
   NavOptions,
@@ -1425,7 +1427,7 @@ export namespace Components {
     * @param name The name of the animation to register.
     * @param animation The animation function to register.
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
+    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     * @param enable If `true`, the menu swipe gesture should be enabled.
@@ -2182,6 +2184,10 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
+    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    */
+    'inputmode': 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -2685,10 +2691,6 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * @deprecated Use `buttons` instead. Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -2747,10 +2749,6 @@ export namespace Components {
     * Present the toast overlay after it has been created.
     */
     'present': () => Promise<void>;
-    /**
-    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
-    */
-    'showCloseButton': boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
@@ -5440,6 +5438,10 @@ declare namespace LocalJSX {
     */
     'disabled'?: boolean;
     /**
+    * A hint to the browser for which keyboard to display. Possible values are: `"none"` | `"text"` | `"tel"` | `"url"` | `"email"` | `"numeric"` | `"decimal"` | `"search"`.
+    */
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -5976,10 +5978,6 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * @deprecated Use `buttons` instead. Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -6035,10 +6033,6 @@ declare namespace LocalJSX {
     * The position of the toast on the screen.
     */
     'position'?: 'top' | 'bottom' | 'middle';
-    /**
-    * @deprecated Use `buttons` instead. If `true`, the close button will be displayed.
-    */
-    'showCloseButton'?: boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
