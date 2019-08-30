@@ -25,12 +25,13 @@ import {
   HeaderFn,
   HeaderHeightFn,
   InputChangeEventDetail,
+  IonicAnimation,
   ItemHeightFn,
   ItemRenderFn,
   ItemReorderEventDetail,
   LoadingOptions,
   MenuChangeEventDetail,
-  MenuControllerI,
+  MenuI,
   ModalOptions,
   NavComponent,
   NavOptions,
@@ -879,7 +880,7 @@ export namespace Components {
     */
     'alt'?: string;
     /**
-    * The image URL. This attribute is mandatory for the <img> element.
+    * The image URL. This attribute is mandatory for the `<img>` element.
     */
     'src'?: string;
   }
@@ -957,9 +958,9 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
-    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
-    'inputmode'?: string;
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
@@ -1376,7 +1377,6 @@ export namespace Components {
     'type': 'submit' | 'reset' | 'button';
   }
   interface IonMenuController {
-    '_getInstance': () => Promise<MenuControllerI>;
     /**
     * Close the menu. If a menu is specified, it will close that menu. If no menu is specified, then it will close any menu that is open. If it does not find any open menus, it will return `false`.
     * @param menu The menuId or side of the menu to close.
@@ -1425,7 +1425,7 @@ export namespace Components {
     * @param name The name of the animation to register.
     * @param animation The animation function to register.
     */
-    'registerAnimation': (name: string, animation: AnimationBuilder) => Promise<void>;
+    'registerAnimation': (name: string, animation: AnimationBuilder | ((menu: MenuI) => IonicAnimation)) => Promise<void>;
     /**
     * Enable or disable the ability to swipe open the menu.
     * @param enable If `true`, the menu swipe gesture should be enabled.
@@ -2182,6 +2182,10 @@ export namespace Components {
     */
     'getInputElement': () => Promise<HTMLInputElement>;
     /**
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+    */
+    'inputmode': 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -2685,10 +2689,6 @@ export namespace Components {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -2747,10 +2747,6 @@ export namespace Components {
     * Present the toast overlay after it has been created.
     */
     'present': () => Promise<void>;
-    /**
-    * If `true`, the close button will be displayed.
-    */
-    'showCloseButton': boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
@@ -4369,7 +4365,7 @@ declare namespace LocalJSX {
     */
     'onIonImgWillLoad'?: (event: CustomEvent<void>) => void;
     /**
-    * The image URL. This attribute is mandatory for the <img> element.
+    * The image URL. This attribute is mandatory for the `<img>` element.
     */
     'src'?: string;
   }
@@ -4443,9 +4439,9 @@ declare namespace LocalJSX {
     */
     'disabled'?: boolean;
     /**
-    * A hint to the browser for which keyboard to display. This attribute applies when the value of the type attribute is `"text"`, `"password"`, `"email"`, or `"url"`. Possible values are: `"verbatim"`, `"latin"`, `"latin-name"`, `"latin-prose"`, `"full-width-latin"`, `"kana"`, `"katakana"`, `"numeric"`, `"tel"`, `"email"`, `"url"`.
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
     */
-    'inputmode'?: string;
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
     /**
     * The maximum value, which must not be less than its minimum (min attribute) value.
     */
@@ -5440,6 +5436,10 @@ declare namespace LocalJSX {
     */
     'disabled'?: boolean;
     /**
+    * A hint to the browser for which keyboard to display. Possible values: `"none"`, `"text"`, `"tel"`, `"url"`, `"email"`, `"numeric"`, `"decimal"`, and `"search"`.
+    */
+    'inputmode'?: 'none' | 'text' | 'tel' | 'url' | 'email' | 'numeric' | 'decimal' | 'search';
+    /**
     * The mode determines which platform styles to use.
     */
     'mode'?: "ios" | "md";
@@ -5976,10 +5976,6 @@ declare namespace LocalJSX {
     */
     'buttons'?: (ToastButton | string)[];
     /**
-    * Text to display in the close button.
-    */
-    'closeButtonText'?: string;
-    /**
     * The color to use from your application's color palette. Default options are: `"primary"`, `"secondary"`, `"tertiary"`, `"success"`, `"warning"`, `"danger"`, `"light"`, `"medium"`, and `"dark"`. For more information on colors, see [theming](/docs/theming/basics).
     */
     'color'?: Color;
@@ -6035,10 +6031,6 @@ declare namespace LocalJSX {
     * The position of the toast on the screen.
     */
     'position'?: 'top' | 'bottom' | 'middle';
-    /**
-    * If `true`, the close button will be displayed.
-    */
-    'showCloseButton'?: boolean;
     /**
     * If `true`, the toast will be translucent. Only applies when the mode is `"ios"` and the device supports [`backdrop-filter`](https://developer.mozilla.org/en-US/docs/Web/CSS/backdrop-filter#Browser_compatibility).
     */
