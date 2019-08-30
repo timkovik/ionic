@@ -729,6 +729,11 @@ ion-nav,method,setRoot,setRoot<T extends NavComponent>(component: T, componentPr
 ion-nav,event,ionNavDidChange,void,false
 ion-nav,event,ionNavWillChange,void,false
 
+ion-nav-link,none
+ion-nav-link,prop,component,Function | HTMLElement | ViewController | null | string | undefined,undefined,false,false
+ion-nav-link,prop,componentProps,undefined | { [key: string]: any; },undefined,false,false
+ion-nav-link,prop,routerDirection,"back" | "forward" | "root",'forward',false,false
+
 ion-nav-pop,none
 
 ion-nav-push,none
@@ -1063,6 +1068,7 @@ ion-slides,prop,pager,boolean,false,false,false
 ion-slides,prop,scrollbar,boolean,false,false,false
 ion-slides,method,getActiveIndex,getActiveIndex() => Promise<number>
 ion-slides,method,getPreviousIndex,getPreviousIndex() => Promise<number>
+ion-slides,method,getSwiper,getSwiper() => Promise<any>
 ion-slides,method,isBeginning,isBeginning() => Promise<boolean>
 ion-slides,method,isEnd,isEnd() => Promise<boolean>
 ion-slides,method,length,length() => Promise<number>
