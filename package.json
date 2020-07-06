@@ -17,7 +17,7 @@
     "lerna": "^3.16.2",
     "listr": "^0.14.0",
     "rimraf": "^2.6.3",
-    "semver": "^5.5.0",
+    "semver": "^7.3.2",
     "turbocolor": "^2.4.1"
   },
   "engines": {
