@@ -16,7 +16,7 @@
     "inquirer": "^6.0.0",
     "lerna": "^3.16.2",
     "listr": "^0.14.0",
-    "rimraf": "^2.6.3",
+    "rimraf": "^3.0.2",
     "semver": "^5.5.0",
     "turbocolor": "^2.4.1"
   },
